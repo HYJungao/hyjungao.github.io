@@ -8,7 +8,6 @@ order: 4
 <div class="gallery">
     {% for item in site.data.gallery %}
     <div class="gallery-item">
-    <img src="{{ item.image }}">
     <img src="{{ item.image }}" alt="{{ item.title }}">
     </div>
     {% endfor %}
