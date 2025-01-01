@@ -1,31 +1,40 @@
 ---
-#layout: archives
-icon: fas fa-suitcase
+icon: fas fa-briefcase
 order: 4
 ---
 
-|  |  |
-|--|--|
-|![](../assets/portfolio/11.jpg)|![](../assets/portfolio/22.jpg)|
-|![](../assets/portfolio/33.jpg)|![](../assets/portfolio/44.jpg)|
-|![](../assets/portfolio/55.jpg)|![](../assets/portfolio/66.png)|
-|![](../assets/portfolio/77.png)|![](../assets/portfolio/88.jpg)|
-|![](../assets/portfolio/99.png)|![](../assets/portfolio/1010.png)|
-|![](../assets/portfolio/1111.jpg)|![](../assets/portfolio/1212.jpg)|
-|![](../assets/portfolio/1313.jpg)|![](../assets/portfolio/1414.jpg)|
+<script src="../assets/js/gallery.js"></script>
 
+<div class="gallery">
+    {% for item in site.data.gallery %}
+    <div class="gallery-item">
+    <img src="{{ item.image }}">
+    </div>
+    {% endfor %}
+</div>
 
-![](../assets/portfolio/11.jpg)
-![](../assets/portfolio/22.jpg)
-![](../assets/portfolio/33.jpg)
-![](../assets/portfolio/44.jpg)
-![](../assets/portfolio/55.jpg)
-![](../assets/portfolio/66.png)
-![](../assets/portfolio/77.png)
-![](../assets/portfolio/88.jpg)
-![](../assets/portfolio/99.png)
-![](../assets/portfolio/1010.png)
-![](../assets/portfolio/1111.jpg)
-![](../assets/portfolio/1212.jpg)
-![](../assets/portfolio/1313.jpg)
-![](../assets/portfolio/1414.jpg)
+<style>
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto, minmax(150px, 1fr));
+    grid - gap: 2px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object - fit: cover;
+    t
+    ransition: transform 0.3s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+</style>
