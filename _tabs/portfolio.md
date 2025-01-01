@@ -29,9 +29,3 @@ order: 4
 ![](../assets/portfolio/1212.jpg)
 ![](../assets/portfolio/1313.jpg)
 ![](../assets/portfolio/1414.jpg)
-
-|  |  |
-|--|--|
-| <img src="../assets/portfolio/11.jpg" width="200" height="150"> | <img src="../assets/portfolio/22.jpg" width="200" height="150"> |
-| ---- | ---- |
-| <img src="../assets/portfolio/33.jpg" width="200" height="150"> | <img src="../assets/portfolio/44.jpg" width="200" height="150"> |
