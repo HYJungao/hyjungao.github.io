@@ -1,5 +1,5 @@
 ---
-title: Zero-Offload
+title: ZeRO-Offload - Democratizing Billion-Scale Model Training
 date: 2025-01-01 21:23:00 +0800
 categories: [Paper Reading, Distributed Machine Learning]
 tags: [distributed machine learning, paper reading]
