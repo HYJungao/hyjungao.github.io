@@ -9,11 +9,7 @@ tags: [stt, ai, ml, tools]
 
 [MP3 Transcription](https://github.com/HYJungao/tools/blob/main/mp3%20transcription.ipynb)
 
-```python
-!pip install git+https://github.com/openai/whisper.git
-!pip install pydub
-!apt-get install ffmpeg
-
+<pre><code class="language-python">
 import os
 import whisper
 from pydub import AudioSegment
@@ -75,3 +71,4 @@ input_folder = "./"  # change this variable when use
 output_folder = "./"  # change this variable when use
 
 process_audio_files(input_folder, output_folder)
+</code></pre>
