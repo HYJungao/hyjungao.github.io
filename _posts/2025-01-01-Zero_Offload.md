@@ -5,10 +5,6 @@ categories: [Paper Reading, Distributed Machine Learning]
 tags: [distributed machine learning, paper reading]
 ---
 
-## Repository
-
-[ZeRO-Offload: Democratizing Billion-Scale Model Training](https://arxiv.org/abs/2101.06840)
-
 ### Large model training--Scale out
 
 - Use aggregate memory of multiple GPUs to satisfy the memory requirement.
@@ -96,4 +92,9 @@ tags: [distributed machine learning, paper reading]
 - Step N:  Obtain the gradients from the GPU, but skip the CPU optimizer step, and do not update the fp16 parameters on the GPU either. 
 - Step N +1: Compute the parameter updates on the CPU using gradients from step N, while computing the forward and backward pass on the GPU in parallel using parameters updated at step N-1. 
 - The model at (i+1) step will be trained using the parameters updated with gradients from (i-1) step instead of parameters updated at i step, overlapping CPU compute with GPU compute.
+
+
+### Reference
+
+[ZeRO-Offload: Democratizing Billion-Scale Model Training](https://arxiv.org/abs/2101.06840)
 
