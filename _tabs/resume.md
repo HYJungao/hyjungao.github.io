@@ -18,7 +18,7 @@ order: 3
 #### **Korea Advanced Institute of Science and Technology**
 **Master in Computer Science (Exchange)**  
 *Sep 2024 – Jan 2025*  
-- **Key Courses:** Distributed System, Distributed Database, Network Architecture  
+- **Key Courses:** Distributed System, Distributed Database, Network Architecture,  **GPA:** 3.9/4.3
 
 #### **University of Electronic Science and Technology of China**
 **Bachelor of Engineering in Computer Science and Technology**  
