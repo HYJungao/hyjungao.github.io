@@ -1,5 +1,5 @@
 ---
-title: Eculid DDoS Detection 
+title: Eculid - A DDoS Detection Framwork On Programmable Switch
 date: 2025-01-01 21:16:00 +0800
 categories: [Project, Network]
 tags: [ddos, security, project, computer network]
@@ -124,50 +124,40 @@ Result on a small slice of the dataset (time: 20:59:36 to 21:16:18, attack start
 
 ### Experiment with HyperLoglog
 
-- Observation window size: 2 ** 18
+- Observation window size: 2 ** 14
 - Cardinality precision: 0.01
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/experimenthyperloglog.png" width="600" alt="Experiment with HyperLoglog">
-
-The cardinality of src and dst is similar.
-
-When run on a smaller dataset:
-
-- Observation window size: 2 ** 14
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/hyperloglog.png" width="400" alt="Experiment with HyperLoglog">
 
 The actual counts of source and destination IP addresses are as follows:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/actualcount.png" width="400" alt="Actual Count">
-
-The cardinality estimates obtained using the HyperLogLog algorithm are as follows:
-
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/hyperloglogresult.png" width="400" alt="HyperLoglog Count">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/actual.png" width="400" alt="Actual Count">
 
 Finally, the differences between the actual counts and the HyperLogLog estimates are illustrated here:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/differencebetweenhllandactual.png" width="400" alt="The difference between actual count and hyperloglog">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/difference.png" width="400" alt="The difference between actual count and hyperloglog">
 
-The count of source IP address bursts when the attack begins, while the destination IP shows an increase and then stabilizes. However, the cardinality of both sets remains similar. This could be due to the fact that the dataset contains traffic in both directions. The victim actually responds to the attack requests.
+The cardinality of source IP address bursts when the attack begins, while the destination IP shows an increase and then stabilizes. The cardinality calculated using HyperLogLog is quite accurate, with the difference between the estimated cardinality and the actual count being less than 5. Given an error rate of 0.01, HyperLogLog requires approximately 12 KB to store the counter, which is acceptable.
 
-The reason for this is related to the HyperLogLog algorithm, which hashes IP addresses and counts the leading zeros to estimate cardinality. When two sets contain the same elements, even if those elements have different frequencies, they will still exhibit the same cardinality. Therefore, when the victim responds to the attack request, even just once, the cardinality remains similar.
+For further deployment, additional effort will be needed to adapt other detection mechanisms to this data structure. Moreover, the cardinality calculation involving multiple buckets introduces operations that are not supported by the programmable switch, necessitating extra efforts to optimize the calculation process.
 
 ### Experiment with HyperLoglog of one direction (to_victim)
 
 The entropy method:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/to_victim_entropy.png" width="400" alt="The entropy method">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/to_victim_entropy.png" width="400" alt="The entropy method">
 
 The actual count:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/to_victim_actual.png" width="400" alt="The actual count">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/to_victim_actual.png" width="400" alt="The actual count">
 
 The hyperloglog:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/to_victim_hyperloglog.png" width="400" alt="The hyperloglog">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/to_victim_hyperloglog.png" width="400" alt="The hyperloglog">
 
 The difference between actual count and the hyperloglog:
 
-<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/to_victim_differencehyperloglogactual.png" width="400" alt="The difference between actual count and the hyperloglog">
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/to_victim_difference.png" width="400" alt="The difference between actual count and the hyperloglog">
 
 ### Other framework (Jaqen and Patronum)
 
