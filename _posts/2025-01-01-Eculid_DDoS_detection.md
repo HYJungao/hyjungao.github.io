@@ -161,14 +161,12 @@ The difference between actual count and the hyperloglog:
 
 ### Other framework (Jaqen and Patronum)
 
-[A Study on Programmable Switch Enabled Network Defense Methods Against Volumetric Attacks](https://github.com/HYJungao/Eculid-in-Py/blob/main/Euclid_A_Fully_In-Network_P4-Based_Approach_for_Real-Time_DDoS_Attack_Detection_and_Mitigation.pdf)
+[A Study on Programmable Switch Enabled Network Defense Methods Against Volumetric Attacks](/assets/post/2025-01-01-Eculid_DDoS_detection/CS540_Midterm_Paper.pdf)
 
-### Repository
+### Project Repository
 
 [Eculid in python](https://github.com/HYJungao/Eculid-in-Py/tree/main)
 
 ### Reference
 
 [Euclid: A Fully In-Network, P4-Based Approach for Real-Time DDoS Attack Detection and Mitigation](https://ieeexplore.ieee.org/document/9311137)
-
-
