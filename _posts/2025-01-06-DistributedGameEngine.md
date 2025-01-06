@@ -31,69 +31,21 @@ tags: [distributed system, distributed game engine, paper reading]
 
 ### [Virtualized Infrastructure for Video Game Applications in Cloud Environments](https://dl.acm.org/doi/10.1145/2642668.2642679)
 
-### [Aura Projection for Scalable Real-Time Physics]()
+### [Aura Projection for Scalable Real-Time Physics](https://dl.acm.org/doi/10.1145/3306131.3317021)
 
-### []()
+### [CloudHide: Towards Latency Hiding Techniques for Thin-client Cloud Gaming](https://dl.acm.org/doi/10.1145/3126686.3126777)
 
-### []()
+### [SMASH: A distributed game engine architecture](https://ieeexplore.ieee.org/document/7543739)
 
-### []()
+### [Revamping Cloud Gaming With Distributed Engines](https://ieeexplore.ieee.org/document/9767695)
 
-### []()
+### [Cloud Baking: Collaborative Scene Illumination for Dynamic Web3D Scenes](https://dl.acm.org/doi/abs/10.1145/3206431)
 
-### []()
+### [A novel cloud gaming framework using joint video and graphics streaming](https://ieeexplore.ieee.org/document/6890204)
 
-### []()
+### [Using Graphics Rendering Contexts to Enhance the Real-Time Video Coding for Mobile Cloud Gaming](https://dl.acm.org/doi/10.1145/2072298.2072313)
 
-### []()
+### [Mobile Collaborative Walkthrough Using 3D Image Warping and Streaming](https://ieeexplore.ieee.org/document/1372417)
 
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
-
-### []()
+### [Post-Rendering 3D Image Warping: Visibility, Reconstruction, and Performance for Depth-Image Warping](https://www.semanticscholar.org/paper/Post-Rendering-3D-Image-Warping%3A-Visibility%2C-and-Bishop-Mark/157707cb0d7676296bb6e5bed34560578f7ceba7)
 
