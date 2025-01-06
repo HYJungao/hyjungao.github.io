@@ -182,16 +182,12 @@ The blue section on the left represents computations performed on the server, wh
   - For an image with resolution 𝑊 ·𝐻 , the total time complexity for one ray per pixel is 𝑂(𝑊 · 𝐻 · 𝐷 · log𝑇).
 - Given a machine with computational capacity 𝐶, the maximum samples per pixel (SPP) is determined by:
 
-$$
-SPP = \frac{C}{O(W \cdot H \cdot D \cdot \log T)}
-$$
+<img src="../assets/post/2025-01-01-Distributed_Path_Tracer/f1.png" width="250" alt="The F1.">
 
 - On the client side, where 𝐷 = 1 (direct illumination only), the computational complexity is significantly lower compared to the server, which must process global illumination with 𝐷 bounces. 
 - The server’s computational workload is 𝐷 times greater than that of the client. When additional servers are introduced, the rendering workload is distributed across 𝑁 servers, with each server processing a proportional fraction of the image. Consequently, the samples per pixel (SPP) for each server can be expressed as (ignoring the communication cost since this system is targeted to run in LAN environment, where communication is relatively fast):
 
-$$
-SPP = \frac{C}{O(W \cdot H \cdot D \cdot \log T)} \cdot N
-$$
+<img src="../assets/post/2025-01-01-Distributed_Path_Tracer/f2.png" width="300" alt="The F2.">
 
 - The workload distribution strategy allows servers to allocate more resources to improving rendering quality by increasing the sampling rate. 
 - If the SPP is fixed, by allocating 𝑁 = 𝐷 servers, the computation required for each server is effectively reduced to 1 / 𝑁 of the original workload.
