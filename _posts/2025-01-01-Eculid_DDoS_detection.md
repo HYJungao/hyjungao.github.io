@@ -159,6 +159,64 @@ The difference between actual count and the hyperloglog:
 
 <img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/to_victim_difference.png" width="400" alt="The difference between actual count and the hyperloglog">
 
+### Extra Findings
+
+In the original experiment with an observation window size of \(2^{18}\) and a cardinality precision of 0.01, we obtained the following results, where the cardinalities of the source and destination sets are similar:
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/experimenthyperloglog.png" width="600" alt="Experiment with HyperLoglog">
+
+For entropy, we observed that the count of source IP address bursts increases when the attack begins, while the destination IP shows an increase that eventually stabilizes. However, the cardinality of both sets remains similar. This phenomenon could be attributed to the dataset containing traffic in both directions, as the victim responds to the incoming attack requests.
+
+We hypothesized that this result is related to the HyperLogLog algorithm, which hashes IP addresses and counts leading zeros to estimate cardinality. When two sets contain the same elements, they will exhibit the same cardinality, regardless of the differing frequencies of those elements. Consequently, if the victim responds to the attack request even once, the cardinality remains comparable.
+
+I ran this experiment again and noticed that the effectiveness of counting the number of addresses is quite sensitive to the size of the observation window. The following illustrates the results of the entropy method with different observation window sizes:
+
+- Observation window size: 2 ** 14
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/entropy.png" width="400" alt="Observation window size: 2 ** 14">
+
+- Observation window size: 2 ** 15
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_15entropy.png" width="400" alt="Observation window size: 2 ** 15">
+
+- Observation window size: 2 ** 16
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_16entropy.png" width="400" alt="Observation window size: 2 ** 16">
+
+- Observation window size: 2 ** 17
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_17entropy.png" width="400" alt="Observation window size: 2 ** 17">
+
+- Observation window size: 2 ** 18
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_18entropy.png" width="400" alt="Observation window size: 2 ** 18">
+
+It is notable that the entropy method exhibits good scalability. As the window size increases, the entropy values become more stable and distinguishable.
+
+The following presents the results obtained with the HyperLogLog method:
+
+- Observation window size: 2 ** 14
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/new/hyperloglog.png" width="400" alt="Observation window size: 2 ** 14">
+
+- Observation window size: 2 ** 15
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_15.png" width="400" alt="Observation window size: 2 ** 15">
+
+- Observation window size: 2 ** 16
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_16.png" width="400" alt="Observation window size: 2 ** 16">
+
+- Observation window size: 2 ** 17
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_17.png" width="400" alt="Observation window size: 2 ** 17">
+
+- Observation window size: 2 ** 18
+
+<img src="../assets/post/2025-01-01-Eculid_DDoS_detection/2_18.png" width="400" alt="Observation window size: 2 ** 18">
+
+Regarding HyperLogLog, we found that the cardinalities of the source and destination addresses become increasingly similar and potentially unusable when the window size grows to 2 ** 16.
+
 ### Other framework (Jaqen and Patronum)
 
 [A Study on Programmable Switch Enabled Network Defense Methods Against Volumetric Attacks](/assets/post/2025-01-01-Eculid_DDoS_detection/CS540_Midterm_Paper.pdf)
