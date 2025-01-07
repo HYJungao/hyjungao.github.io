@@ -1,7 +1,7 @@
 ---
 title: Distributed Path Tracer
 date: 2025-01-01 21:25:00 +0800
-categories: [Project, Distributed Computer Garphics]
+categories: [Project, Distributed Computer Graphics]
 tags: [distributed system, computer graphics, remote rendering, project]
 ---
 
