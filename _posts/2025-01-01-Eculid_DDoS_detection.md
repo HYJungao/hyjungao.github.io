@@ -217,6 +217,8 @@ The following presents the results obtained with the HyperLogLog method:
 
 Regarding HyperLogLog, we found that the cardinalities of the source and destination addresses become increasingly similar and potentially unusable when the window size grows to 2 ** 16.
 
+As the window becomes larger, more and more servers' responses to attack requests are included in the same window as the attack requests, resulting in similar cardinality in the hyperloglog statistics. However, the entropy method, which calculates frequency, has a greater tolerance for noise flow and stronger robustness.
+
 ### Other framework (Jaqen and Patronum)
 
 [A Study on Programmable Switch Enabled Network Defense Methods Against Volumetric Attacks](/assets/post/2025-01-01-Eculid_DDoS_detection/CS540_Midterm_Paper.pdf)
