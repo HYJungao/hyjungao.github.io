@@ -64,7 +64,33 @@ tags: [distributed machine learning, paper reading]
 
 [Scaling Distributed Machine Learning with the Parameter Server](https://dl.acm.org/doi/10.5555/2685048.2685095)
 
-- 
+<img src="../assets/post/2025-01-08-DistributedMachineLearning/ps1.png" width="400" alt="Scaling Distributed Machine Learning with the Parameter Server">
+
+- Multiple Work Groups: Different tasks can be run simultaneously, such as training and online inference. The server just needs to have proper parameter version control.
+- (Key, Value): Key: A value derived from the hash of the index of w. Value: A scalar or a vector (e.g., the weight w).
+- Range-based Push and Pull: Specify an upper bound and a lower bound, and perform batched sending and receiving of the entire segment within that range.
+
+- Asynchronous Execution and Synchronization:
+
+<img src="../assets/post/2025-01-08-DistributedMachineLearning/ps2.png" width="400" alt="Scaling Distributed Machine Learning with the Parameter Server">
+
+- Consistency Model: Reduces waiting time and improves system performance, but it may slow down model convergence.
+
+<img src="../assets/post/2025-01-08-DistributedMachineLearning/ps3.png" width="400" alt="Scaling Distributed Machine Learning with the Parameter Server">
+
+<img src="../assets/post/2025-01-08-DistributedMachineLearning/ps4.png" width="400" alt="Scaling Distributed Machine Learning with the Parameter Server">
+
+- User-defined Filter: Used to filter messages that need to be sent. Example: Significantly Modified Filter – Only items whose updates exceed a certain threshold will be sent.
+- Vector Clock: The total parameter count multiplied by the total number of nodes results in a large size. Since key-value pairs are sent in ranges, it is sufficient to record the timestamp for each segment, which significantly reducing storage requirements.
+- Communication: The server computes a hash for all keys. The client sends the hash of the keys it intends to transmit to the server. If the server finds a match, it can avoid resending the keys.
+- Consistent Hashing:
+  - All keys are organized into a ring, and segments are randomly inserted. Each segment is maintained by a server node (responsible for that range of keys). However, the keys from the next two segments are also backed up. This ensures that the system can tolerate the failure of up to two nodes during training. Nodes can be added or removed dynamically during runtime.
+
+  <img src="../assets/post/2025-01-08-DistributedMachineLearning/ps5.png" width="650" alt="Scaling Distributed Machine Learning with the Parameter Server">
+
+  - Consistency Guarantee: A worker sends parameters to Server1. After performing the operation, Server1 backs up the result to Server2. Server2 sends an acknowledgment (ack) back to Server1. Server1 then sends an ack to the worker.
+  - Bandwidth Optimization: Server1 aggregates values from all workers first, then backs up the aggregated result to Server2. This reduces bandwidth usage but increases latency.
+- Worker Fault Tolerance: If the scheduler detects that a worker has failed, it reassigns the task to another worker or requests a new worker. Since no state is saved, the failure of a worker is not a critical issue.
 
 ### ZeRO: Memory Optimizations toward Training Trillion Parameter Models
 
@@ -111,6 +137,12 @@ tags: [distributed machine learning, paper reading]
   - After completing the backward, obtain a gradient G of complete size, perform a Reduce-Scatter on G, and aggregate the its part of gradient maintained by itself from other GPUs. Communication volume of per GPU is Φ. After the aggregation operation is completed, immediately discard the G that is not maintained by itself.
   - Update W using self-maintained O and G. Since only a portion of W is maintained, there is no need to perform any AllReduce operations on W.
 - ZERO-R:
+  - P_a: Partitioned Activation Checkpointing
+    - Previously, all activations were discarded after calculations were completed. Trade calculations for space. Now, some activations are discarded, and each GPU maintains one activation block. When needed, they are aggregated from other GPUs. Trade bandwidth for space.
+    - This is aimed at the collaborative usage of MP (Model Parallelism) in Megatron. Megatron requires each GPU to hold a complete piece of X, while P_a only keeps a portion of X on each GPU. During computation, the missing parts are aggregated as needed. After computation, each GPU holds a complete-sized Y, but only half of the results. Typically, an all-reduce operation would be performed, but since each GPU now only maintains a portion, the all-reduce is only performed for the portion each GPU maintains.
+  - C_B: Constant Size Buffer
+    - Allocate a fixed-size buffer. The classic approach is to allocate a buffer and wait until it is completely filled before sending the data out. Alternatively, a delay limit can be set, such as waiting for more than 1 microsecond. Even if the buffer is not fully filled, the data is sent out, and the buffer size is dynamically adjusted. If the buffer is frequently filled, it is expanded; if it is often not filled, it is reduced.
+  - M_D: Memory Defragmentation
 
 ### PipeDream: Generalized Pipeline Parallelism for DNN Training
 
