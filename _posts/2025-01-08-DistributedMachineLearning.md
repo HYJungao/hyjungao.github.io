@@ -237,7 +237,27 @@ tags: [distributed machine learning, paper reading]
 
 [Beyond Data and Model Parallelism for Deep Neural Networks](https://arxiv.org/abs/1807.05358)
 
-- 
+- The SOAP Search Space:
+  - Samples, partitioning training samples (Data Parallelism)
+  - Operators, partitioning DNN operators (Model Parallelism)
+  - Attributes, partitioning attributes in a sample (e.g., different pixels)
+  - Parameters, partitioning parameters in an operator
+  - Operators Parallelism: Different Conv of different channels on different devices. Attribute Parallelism: High resolution image, sub pixel blocks on different devices.
+- Operator graph: Edges represent tensors while nodes represent operators.
+- Device topology: Edges represent device's connection. Nodes represent devices.
+- Execution Simulator:
+  - Takes the operator graph and device topology as inputs to automatically find the optimal parallel strategy.
+  - Transformed into a cost minimization problem, specifically minimizing the predicted execution time.
+  - The number of possible strategies is exponential with respect to the number of operators, resulting in an excessively large search space.
+  - To address the large search space, heuristic algorithms are employed.
+- MCMC Sampling:
+  - Maintain a current strategy S, and randomly propose a new strategy S∗. S∗is accepted with the following probability:
+
+  <img src="../assets/post/2025-01-08-DistributedMachineLearning/flexflow.png" width="500" alt="flexflow">
+
+  - Randomly select an operator from the current strategy and replace its parallelization configuration c with a random configuration. Use the predicted execution time as the loss function in the equation.
+  - Use existing strategies (e.g., data parallelism, expert strategies) or randomly generated strategies as initial candidates.
+  - For each initial strategy, the search algorithm iteratively proposes new candidates until one of the following two criteria is met: (1) The search time budget for the current initial strategy is exhausted; or (2) The search process cannot further improve the best-found strategy within half of the search time.
 
 ### Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM
 
