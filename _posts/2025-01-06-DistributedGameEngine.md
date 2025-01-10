@@ -1,5 +1,5 @@
 ---
-title: Distributed Game Engine
+title: Distributed Game Engine Paper Reading
 date: 2025-01-06 16:00:00 +0800
 categories: [Paper Reading, Distributed Game Engine]
 tags: [distributed system, distributed game engine, paper reading]

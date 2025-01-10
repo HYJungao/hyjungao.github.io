@@ -1,5 +1,5 @@
 ---
-title: Distributed Machine Learning
+title: Distributed Machine Learning Paper Reading
 date: 2025-01-01 21:25:00 +0800
 categories: [Paper Reading, Distributed Machine Learning]
 tags: [distributed machine learning, paper reading]
@@ -162,6 +162,17 @@ tags: [distributed machine learning, paper reading]
     - Allocate a fixed-size buffer. The classic approach is to allocate a buffer and wait until it is completely filled before sending the data out. Alternatively, a delay limit can be set, such as waiting for more than 1 microsecond. Even if the buffer is not fully filled, the data is sent out, and the buffer size is dynamically adjusted. If the buffer is frequently filled, it is expanded; if it is often not filled, it is reduced.
   - M_D: Memory Defragmentation
 
+### KV-Cache
+
+- The focus of LLM inference shifts to achieving high responsiveness and throughput.
+- Transformer incorporates a self-attention mechanism, which computes Query (Q), Key (K), and Value (V), where the Key and Value matrices typically store information of the entire sequence, while the Query vector corresponds to the token currently being processed in the sequence.
+- During inference, the model generates new tokens iteratively by computing attention scores between the Query and the historical Keys, which are then used to calculate a weighted sum over the historical Values.
+- Without optimization, this process involves recomputing the Keys and Values of the entire sequence at each generation step, significantly slowing down inference.
+- KV-cache strategy caches the Keys and Values of previous tokens to eliminate redundant computation. By storing these two historical results, the model only needs to compute the QKV vectors for the newly generated token and update the cache, significantly improving inference speed.
+- However, this approach substantially increases memory requirements as the KV cache grows with the sequence length. In the KV-cache strategy, the primary memory requirement stems from the model parame ters and the KV-cache itself.
+
+<img src="../assets/post/2025-01-01-DistributedMachineLearning/transformer.png" width="800" alt="KV-Cache">
+
 ### PipeDream: Generalized Pipeline Parallelism for DNN Training
 
 [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://arxiv.org/abs/1806.03377)
@@ -226,6 +237,17 @@ tags: [distributed machine learning, paper reading]
   - For communication time, estimate it by dividing the communication volume by the device communication bandwidth. The communication volume is derived from theoretical calculations, while the communication bandwidth is obtained through profiling.
   - Based on the above estimation results, Galvatron simulates the execution process to calculate the overhead of a given layer using a given strategy.
   - There is performance degradation due to overlapping computation and communication on GPUs. This performance degradation is not caused by blocking due to communication-computation dependencies. Through experiments, the authors found that overlapping communication and computation occupies GPU computing resources (e.g., CUDA cores), significantly affecting the execution efficiency of both.
+
+### Mixed Precision Training
+
+- FP16 occupies half the memory of FP32 and is faster to compute, which can facilitate the training of larger models.
+  - Data Overflow: Underflow, Numbers close to zero may be rounded to zero due to rounding errors Overflow, Extremely large numbers may be approximated as infinity.
+  - Rounding Errors: Differences between the approximate value obtained from computation and the exact value, such as 0.3 becoming 0.30000000000000004. These small errors can accumulate over time.
+- FP32 Weight Backup: Solves rounding error
+  - Maintain a master copy of weights in FP32 (Master-Weights), while using FP16 to store weights, activations, and gradients during training. During parameter updates, update the FP32 master weights using FP16 gradients.
+- Loss Scaling: Solves underflow
+  - When using FP16 instead of FP32 for gradient updates, values that are too small can cause underflow in FP16 precision, leading some gradients to become zero and preventing model convergence.
+  - FP16 is used for storage and multiplication. FP32 is used for accumulation to avoid rounding errors.
 
 ### GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding
 
