@@ -1,6 +1,6 @@
 ---
 title: Distributed Machine Learning Paper Reading
-date: 2025-01-01 21:25:00 +0800
+date: 2025-01-01 21:20:00 +0800
 categories: [Paper Reading, Distributed Machine Learning]
 tags: [distributed machine learning, paper reading]
 ---
