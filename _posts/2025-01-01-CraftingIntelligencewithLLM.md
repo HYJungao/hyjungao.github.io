@@ -1,6 +1,6 @@
 ---
 title: Crafting Intelligence with LLM Paper Reading
-date: 2025-01-01 21:25:00 +0800
+date: 2025-01-01 20:18:00 +0800
 categories: [Paper Reading, Crafting Intelligence with LLM]
 tags: [llm, ai, ml, paper reading]
 ---
